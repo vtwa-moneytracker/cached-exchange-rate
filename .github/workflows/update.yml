@@ -1,0 +1,22 @@
+name: Update exchange rate
+on:
+  workflow_dispatch:
+  schedule:
+     - cron: 0 0 1 * *
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2.0.2
+      - name: Get & Write exchange rate to file
+        run: deno run --allow-env --allow-read --allow-write --allow-net ./distBuilder.ts
+      - name: Commit to github
+        run: |
+          git config --global user.name "vtwamt bot"
+          git config --global user.email "ghost@action.noreply.github.com"
+          git commit -a -m "Change exchange rate file"
+          git push
