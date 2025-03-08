@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v2.0.2
       - name: Get & Write exchange rate to file
-        run: deno run --allow-env --allow-read --allow-write --allow-net ./distBuilder.ts
+        run: deno run --allow-env --allow-read --allow-write --allow-net ./updater.ts
       - name: Commit to github
         run: |
           git config --global user.name "vtwamt bot"
